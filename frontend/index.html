@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="shortcut icon" href="../imgs/pip_cabeça.png" type="image/x-icon">
+  <title>Pip.IA — Assistente de Programação IA</title>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+  <!-- ══════════════════════════════
+       HEADER
+  ══════════════════════════════ -->
+  <header>
+    <div class="logo">
+      <div class="logo-icon">
+        <img id="logo" src="../imgs/pip_cabeça.png" alt="logo do pip">
+      </div>
+      <div>
+        <h1>Pip.IA</h1>
+        <span>ASSISTENTE DE PROGRAMAÇÃO IA</span>
+      </div>
+    </div>
+    <div class="status">
+      <div class="status-dot offline" id="statusDot"></div>
+      <span id="statusText">Sem API Key</span>
+    </div>
+  </header>
+
+  <!-- Barra de API Key oculta (chave já está no script.js) -->
+
+  <!-- ══════════════════════════════
+       LAYOUT PRINCIPAL
+  ══════════════════════════════ -->
+  <div class="main">
+
+    <!-- SIDEBAR — ícones compactos -->
+    <aside class="sidebar">
+      <div class="sidebar-title">Modo</div>
+
+      <button class="mode-btn active" onclick="setMode(this, 'geral')" data-mode="Chat Geral">
+        <span class="icon">💬</span><span>Chat Geral</span>
+      </button>
+      <button class="mode-btn" onclick="setMode(this, 'debug')" data-mode="Debug">
+        <span class="icon">🐛</span><span>Depurar Código</span>
+      </button>
+      <button class="mode-btn" onclick="setMode(this, 'explicar')" data-mode="Explicar">
+        <span class="icon">📖</span><span>Explicar Código</span>
+      </button>
+      <button class="mode-btn" onclick="setMode(this, 'gerar')" data-mode="Gerar Código">
+        <span class="icon">⚡</span><span>Gerar Código</span>
+      </button>
+      <button class="mode-btn" onclick="setMode(this, 'revisar')" data-mode="Revisar">
+        <span class="icon">🔍</span><span>Revisar Código</span>
+      </button>
+
+      <div class="sidebar-divider"></div>
+
+      <button class="mode-btn" onclick="setMode(this, 'sql')" data-mode="SQL Helper">
+        <span class="icon">🗄️</span><span>SQL Helper</span>
+      </button>
+      <button class="mode-btn" onclick="setMode(this, 'git')" data-mode="Git Helper">
+        <span class="icon">🌿</span><span>Git Helper</span>
+      </button>
+
+      <button class="new-chat-btn" onclick="clearChat()" title="Novo Chat">＋</button>
+    </aside>
+
+    <!-- ÁREA DO CHAT -->
+    <div class="chat-container">
+
+      <!-- Mensagens -->
+      <div class="messages" id="messages">
+        <div class="welcome" id="welcome">
+          <!-- Robô animado -->
+          <div class="welcome-icon">
+            <img src="../imgs/pip.png" alt="" srcset="">
+          </div>
+
+          <h2>Seja Bem-Vindo! <strong>👋</strong></h2>
+          <p>Sou Pip.IA, seu agente de I.A. Como posso te ajudar hoje?</p>
+
+          <div class="welcome-chips">
+            <div class="chip" onclick="sendChip('Como faço um loop em Python?')">Loop em Python</div>
+            <div class="chip" onclick="sendChip('O que é uma API REST?')">O que é REST API?</div>
+            <div class="chip" onclick="sendChip('Explique o que é Git e como usar')">Como usar Git?</div>
+            <div class="chip" onclick="sendChip('Quais são as diferenças entre C e Java?')">C vs Java</div>
+            <div class="chip" onclick="sendChip('Como conectar banco de dados com Python?')">BD com Python</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Input -->
+      <div class="input-area">
+        <div class="input-wrapper">
+          <span class="input-plus">＋</span>
+          <textarea
+            id="userInput"
+            rows="1"
+            placeholder="Pergunte alguma coisa..."
+            onkeydown="handleKey(event)"
+            oninput="autoResize(this)"
+          ></textarea>
+          <button class="send-btn" id="sendBtn" onclick="sendMessage()">➤</button>
+        </div>
+        <div class="input-hint">Enter para enviar • Shift+Enter para nova linha • Powered by Google Gemini</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Toast de notificações -->
+  <div class="toast" id="toast"></div>
+
+  <script src="../backend/config.js"></script>
+  <script src="../backend/script.js"></script>
+</body>
+</html>
