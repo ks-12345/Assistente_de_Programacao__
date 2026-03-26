@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% block title %}CodeMind — Chat{% endblock %}
+
+{% block content %}
+<div class="app-layout">
+
+  <!-- ── SIDEBAR ── -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="brand">
+        <span class="brand-icon">🧠</span>
+        <span class="brand-name">CodeMind</span>
+      </div>
+    </div>
+
+    <!-- API Key -->
+    <div class="api-section">
+      <div class="status-row">
+        <span class="status-dot offline" id="statusDot"></span>
+        <span class="status-text" id="statusText">Desconectado</span>
+      </div>
+      <input type="password" id="apiKeyInput" class="api-input" placeholder="Cole sua API Key aqui..." />
+      <button class="btn-save" onclick="saveApiKey()">Salvar Chave</button>
+      <a href="https://aistudio.google.com/app/apikey" target="_blank" class="get-key-link">Obter chave grátis →</a>
+    </div>
+
+    <!-- Modos -->
+    <div class="modes-section">
+      <p class="section-label">MODO DA IA</p>
+      <div class="modes-grid">
+        <button class="mode-btn active" onclick="setMode(this,'geral')">💬 Geral</button>
+        <button class="mode-btn" onclick="setMode(this,'debug')">🐛 Debug</button>
+        <button class="mode-btn" onclick="setMode(this,'explicar')">📖 Explicar</button>
+        <button class="mode-btn" onclick="setMode(this,'gerar')">⚡ Gerar</button>
+        <button class="mode-btn" onclick="setMode(this,'revisar')">🔍 Revisar</button>
+        <button class="mode-btn" onclick="setMode(this,'sql')">🗄️ SQL</button>
+        <button class="mode-btn" onclick="setMode(this,'git')">🌿 Git</button>
+      </div>
+    </div>
+
+    <div class="sidebar-footer">
+      <button class="btn-clear" onclick="clearChat()">🗑️ Limpar Chat</button>
+      <a href="/logout" class="btn-logout">Sair ({{ session.email }})</a>
+    </div>
+  </aside>
+
+  <!-- ── CHAT AREA ── -->
+  <main class="chat-area">
+    <div class="messages" id="messages">
+      <div class="welcome" id="welcome">
+        <div class="welcome-icon">🧠</div>
+        <h2>CodeMind está pronto!</h2>
+        <p>Como posso ajudar com programação hoje?</p>
+        <div class="welcome-chips">
+          <div class="chip" onclick="sendChip('Como faço um loop em Python?')">Loop em Python</div>
+          <div class="chip" onclick="sendChip('O que é uma API REST?')">O que é REST API?</div>
+          <div class="chip" onclick="sendChip('Explique o que é Git e como usar')">Como usar Git?</div>
+          <div class="chip" onclick="sendChip('Quais são as diferenças entre C e Java?')">C vs Java</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="input-area">
+      <div class="input-wrapper">
+        <textarea
+          id="userInput"
+          placeholder="Digite sua mensagem... (Enter para enviar, Shift+Enter para nova linha)"
+          onkeydown="handleKey(event)"
+          oninput="autoResize(this)"
+          rows="1"
+        ></textarea>
+        <button id="sendBtn" onclick="sendMessage()" disabled>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <line x1="22" y1="2" x2="11" y2="13"></line>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div class="toast" id="toast"></div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+{% endblock %}
