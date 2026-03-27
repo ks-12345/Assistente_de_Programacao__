@@ -1,58 +1,46 @@
 // ══════════════════════════════════════════════
-// script.js — CodeMind (versão Flask)
+// script.js — Pip-I.A (versão Flask)
 // ══════════════════════════════════════════════
 
-let apiKey      = ''
 let currentMode = 'geral';
 let history     = [];
 
 const SYSTEM_PROMPTS = {
-  geral: `Você é CodeMind, um assistente de programação avançado em português do Brasil.
+  geral: `Você é Pip-I.A, um assistente de programação avançado em português do Brasil.
 Você é especialista em todas as linguagens e tecnologias de programação.
 Seja direto, didático e use exemplos de código quando relevante.
 Formate o código em blocos de código com a linguagem especificada.`,
 
-  debug: `Você é CodeMind no modo DEBUG.
+  debug: `Você é Pip-I.A no modo DEBUG.
 Analise o código fornecido, identifique bugs, erros de lógica e problemas de performance.
 Explique cada problema encontrado e forneça o código corrigido.
 Seja detalhado e didático. Responda em português.`,
 
-  explicar: `Você é CodeMind no modo EXPLICAR.
+  explicar: `Você é Pip-I.A no modo EXPLICAR.
 Explique o código fornecido linha por linha ou em blocos lógicos,
 de forma clara e didática para um estudante.
 Use analogias quando útil. Responda em português.`,
 
-  gerar: `Você é CodeMind no modo GERAR CÓDIGO.
+  gerar: `Você é Pip-I.A no modo GERAR CÓDIGO.
 Crie código limpo, bem comentado e funcional com base na descrição do usuário.
 Siga boas práticas e explique brevemente o que foi criado. Responda em português.`,
 
-  revisar: `Você é CodeMind no modo REVISÃO.
+  revisar: `Você é Pip-I.A no modo REVISÃO.
 Analise a qualidade do código: legibilidade, boas práticas, padrões,
 possíveis melhorias e segurança. Dê uma nota de 0-10 e sugestões práticas.
 Responda em português.`,
 
-  sql: `Você é CodeMind no modo SQL.
+  sql: `Você é Pip-I.A no modo SQL.
 Você é especialista em bancos de dados relacionais (MySQL, PostgreSQL, SQLite, SQL Server).
 Ajude com queries, otimização, modelagem e problemas de banco de dados.
 Responda em português.`,
 
-  git: `Você é CodeMind no modo GIT.
+  git: `Você é Pip-I.A no modo GIT.
 Você é especialista em Git e versionamento.
 Explique comandos, resolva conflitos, ensine fluxos de trabalho (gitflow, etc.) de forma prática.
 Responda em português.`
 };
 
-// ── Salvar API Key ──
-function saveApiKey() {
-  const val = document.getElementById('apiKeyInput').value.trim();
-  if (!val) { showToast('Digite uma API Key válida!', 'error'); return; }
-
-  apiKey = val;
-  document.getElementById('statusDot').classList.remove('offline');
-  document.getElementById('statusText').textContent = 'Conectado';
-  document.getElementById('sendBtn').disabled = false;
-  showToast('API Key salva! Pode começar.', 'success');
-}
 
 // ── Trocar modo ──
 function setMode(btn, mode) {
@@ -161,7 +149,6 @@ function copyCode(id) {
 
 // ── FUNÇÃO PRINCIPAL — chama o backend Flask ──
 async function sendMessage() {
-  if (!apiKey) { showToast('Conecte sua API Key primeiro!', 'error'); return; }
 
   const input = document.getElementById('userInput');
   const text  = input.value.trim();
@@ -180,7 +167,7 @@ async function sendMessage() {
     const systemPrompt = SYSTEM_PROMPTS[currentMode];
     const contents = [
       { role: 'user',  parts: [{ text: systemPrompt }] },
-      { role: 'model', parts: [{ text: 'Entendido! Estou pronto para ajudar como CodeMind.' }] },
+      { role: 'model', parts: [{ text: 'Entendido! Estou pronto para ajudar como Pip-I.A.' }] },
       ...history
     ];
 

@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %}CodeMind — Chat{% endblock %}
+{% block title %}Pip-I.A — Chat{% endblock %}
 
 {% block content %}
 <div class="app-layout">
@@ -8,21 +8,22 @@
   <aside class="sidebar">
     <div class="sidebar-header">
       <div class="brand">
-        <span class="brand-icon">🧠</span>
-        <span class="brand-name">CodeMind</span>
+        <span class="brand-icon">
+          <img src="../static/css/imgs/pip_cabeça.png" alt="Mascote Pip-I.A" srcset="" style="height: auto; width: 70px;">
+        </span>
+        <span class="brand-name">Pip-I.A</span>
       </div>
     </div>
 
     <!-- API Key -->
-    <div class="api-section">
-      <div class="status-row">
-        <span class="status-dot offline" id="statusDot"></span>
-        <span class="status-text" id="statusText">Desconectado</span>
-      </div>
-      <input type="password" id="apiKeyInput" class="api-input" placeholder="Cole sua API Key aqui..." />
-      <button class="btn-save" onclick="saveApiKey()">Salvar Chave</button>
-      <a href="https://aistudio.google.com/app/apikey" target="_blank" class="get-key-link">Obter chave grátis →</a>
-    </div>
+<!-- ANTES: toda a div.api-section -->
+<!-- DEPOIS: -->
+<div class="api-section">
+  <div class="status-row">
+    <span class="status-dot online" id="statusDot"></span>
+    <span class="status-text" id="statusText">Conectado</span>
+  </div>
+</div>
 
     <!-- Modos -->
     <div class="modes-section">
@@ -48,8 +49,10 @@
   <main class="chat-area">
     <div class="messages" id="messages">
       <div class="welcome" id="welcome">
-        <div class="welcome-icon">🧠</div>
-        <h2>CodeMind está pronto!</h2>
+        <div class="welcome-icon">
+          <img src="../static/css/imgs/pip.png" alt="Mascote Pip-I.A" srcset="">
+        </div>
+        <h2>Pip-I.A está pronto!</h2>
         <p>Como posso ajudar com programação hoje?</p>
         <div class="welcome-chips">
           <div class="chip" onclick="sendChip('Como faço um loop em Python?')">Loop em Python</div>
@@ -69,7 +72,7 @@
           oninput="autoResize(this)"
           rows="1"
         ></textarea>
-        <button id="sendBtn" onclick="sendMessage()" disabled>
+        <button id="sendBtn" onclick="sendMessage()">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
             <line x1="22" y1="2" x2="11" y2="13"></line>
             <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
