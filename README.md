@@ -1,117 +1,127 @@
-# 🤖 Pip.IA — Assistente de Programação com Inteligência Artificial
+# 🤖 Pip.IA — Assistente de Programação com IA
 
-<p align="center">
-  <img src="imgs/robo.png" alt="Pip.IA" width="200"/>
-</p>
+## 📌 Sobre este projeto
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Google%20Gemini-AI-blue?style=for-the-badge&logo=google" />
-  <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white" />
-  <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white" />
-  <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" />
-</p>
+O **Pip.IA** é uma aplicação web construída em **Flask** que oferece um assistente de programação com inteligência artificial usando a API do **Google Gemini 2.5 Flash**.
 
----
+O usuário faz cadastro/login, acessa um chat protegido por sessão e interage com o modelo para:
+- depurar código,
+- gerar trechos de código,
+- explicar algoritmos,
+- revisar código,
+- tirar dúvidas sobre SQL e Git.
 
-## 📌 Sobre o Projeto
+## ✨ Funcionalidades principais
 
-O **Pip.IA** é um assistente de programação com Inteligência Artificial desenvolvido como trabalho escolar. Ele utiliza a API do **Google Gemini** (via Google AI Studio) para responder perguntas sobre programação, depurar código, explicar conceitos, gerar código e muito mais — tudo em português.
+- 🔐 Autenticação com cadastro e login
+- 💬 Chat com IA para programação
+- 🧠 Múltiplos modos de assistência (debug, explicar, gerar, revisar, SQL, Git)
+- 📋 Cópia de texto com um clique
+- 🗑️ Limpeza de chat sem recarregar a página
+- 🔒 Chave de API armazenada no backend via `.env`
 
----
+## 🛠️ Tecnologias utilizadas
 
-## ✨ Funcionalidades
+- Python 3.10+
+- Flask
+- Requests
+- python-dotenv
+- HTML, CSS e JavaScript puro
+- Google Gemini API
 
-| Modo | Descrição |
-|------|-----------|
-| 💬 Chat Geral | Tire dúvidas gerais sobre programação |
-| 🐛 Depurar Código | Encontra e corrige bugs no seu código |
-| 📖 Explicar Código | Explica o código linha por linha |
-| ⚡ Gerar Código | Cria código a partir de uma descrição |
-| 🔍 Revisar Código | Analisa a qualidade do código com nota |
-| 🗄️ SQL Helper | Ajuda com banco de dados e queries |
-| 🌿 Git Helper | Ensina comandos e fluxos do Git |
-
----
-
-## 🗂️ Estrutura do Projeto
+## 📁 Estrutura do projeto
 
 ```
-📁 Assistente_de_Programacao/
-├── 📁 backend/
-│   ├── config.js           ← Chave da API (não enviado ao GitHub)
-│   ├── config.example.js   ← Modelo do config.js
-│   └── script.js           ← Lógica da IA e do chat
-├── 📁 frontend/
-│   ├── index.html          ← Estrutura da página
-│   └── style.css           ← Estilo visual
-├── 📁 imgs/
-│   └── robo.png            ← Imagem do robô
-├── .gitignore              ← Protege a chave da API
-└── README.md               ← Este arquivo
+codemind/
+├── app.py
+├── .env
+├── users.json
+├── requirements.txt
+├── templates/
+│   ├── base.html
+│   ├── cadastro.html
+│   ├── home.html
+│   ├── index.html
+│   └── login.html
+└── static/
+    ├── css/
+    │   └── style.css
+    └── js/
+        └── script.js
 ```
 
----
+> Observação: se você estiver editando a partir da raiz do repositório, entre na pasta `codemind/` antes de executar o projeto.
 
-## 🚀 Como Executar
+## 🚀 Como executar
 
-### Pré-requisitos
-- [VSCode](https://code.visualstudio.com/) instalado
-- Extensão **Live Server** instalada no VSCode
-- Conta Google para obter a API Key
+### 1. Navegue para o diretório do projeto
 
-### Passo a Passo
-
-**1. Clone o repositório**
 ```bash
-git clone https://github.com/seu-usuario/seu-repositorio.git
+cd codemind
 ```
 
-**2. Configure a API Key**
+### 2. Crie e ative um ambiente virtual
 
-Copie o arquivo de exemplo e renomeie:
 ```bash
-cp backend/config.example.js backend/config.js
+python -m venv venv
+venv\Scripts\activate
 ```
 
-Abra o `backend/config.js` e cole sua chave:
-```js
-const CONFIG = {
-  apiKey: 'SUA_CHAVE_AQUI'
-};
+### 3. Instale as dependências
+
+```bash
+pip install -r requirements.txt
 ```
 
-**3. Obtenha sua API Key gratuita**
+### 4. Crie o arquivo `.env`
 
-Acesse [aistudio.google.com/app/apikey](https://aistudio.google.com/app/apikey), faça login com sua conta Google e crie uma nova chave.
+No diretório `codemind/`, crie um arquivo `.env` com o conteúdo:
 
-**4. Rode o projeto**
+```env
+API_KEY=sua_chave_gemini_aqui
+SECRET_KEY=uma_string_secreta
+```
 
-No VSCode, clique com o botão direito no `frontend/index.html` e selecione **"Open with Live Server"**.
+### 5. Execute o projeto
 
----
+```bash
+python app.py
+```
 
-## 🔐 Segurança
+A aplicação estará disponível em:
 
-A chave da API fica salva apenas no arquivo `backend/config.js`, que está listado no `.gitignore` e **nunca é enviado ao GitHub**. Nunca compartilhe sua chave com outras pessoas.
+```
+http://localhost:5000
+```
 
----
+## ✅ Dependências
 
-## 🛠️ Tecnologias Utilizadas
+```txt
+flask>=3.0.0
+requests>=2.31.0
+python-dotenv>=1.0.0
+```
 
-- **HTML5** — Estrutura da página
-- **CSS3** — Estilo e animações
-- **JavaScript** — Lógica e integração com a IA
-- **Google Gemini API** — Modelo de IA (via Google AI Studio)
+## 🔒 Segurança
 
----
+- A chave do Gemini deve ser mantida no arquivo `.env` do backend.
+- Nunca exponha o `.env` no repositório.
+- As senhas são armazenadas em texto simples no `users.json`; para produção, use hashing seguro (como `bcrypt`) e um banco de dados real.
 
-## 📚 Referências
+## 🗒️ Observações
 
-- [Google AI Studio](https://aistudio.google.com)
-- [Documentação da API Gemini](https://ai.google.dev/docs)
+- O arquivo `users.json` é usado como armazenamento local de usuários.
+- O app exige que `API_KEY` esteja presente no `.env` ou não iniciará.
+
+## 📌 Sugestões de melhoria
+
+- Hash de senha com `bcrypt`
+- Persistência de histórico de conversas por usuário
+- Banco de dados SQLite ou PostgreSQL
+- Deploy em um serviço de nuvem
 
 ---
 
 ## 👨‍💻 Autor
 
-Desenvolvido como trabalho escolar.
+Projeto desenvolvido como assistente de programação com IA.

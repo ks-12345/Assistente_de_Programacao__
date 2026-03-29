@@ -5,25 +5,24 @@
 <div class="app-layout">
 
   <!-- ── SIDEBAR ── -->
-  <aside class="sidebar">
+  <aside class="sidebar" id="sidebar">
     <div class="sidebar-header">
       <div class="brand">
         <span class="brand-icon">
-          <img src="../static/css/imgs/pip_cabeça.png" alt="Mascote Pip-I.A" srcset="" style="height: auto; width: 70px;">
+          <img src="../static/css/imgs/pip_cabeça.png" alt="Pip" style="height:auto;width:36px;">
         </span>
         <span class="brand-name">Pip-I.A</span>
       </div>
+      <button class="theme-toggle" onclick="toggleTheme()" title="Alternar tema" id="themeBtn">🌙</button>
     </div>
 
-    <!-- API Key -->
-<!-- ANTES: toda a div.api-section -->
-<!-- DEPOIS: -->
-<div class="api-section">
-  <div class="status-row">
-    <span class="status-dot online" id="statusDot"></span>
-    <span class="status-text" id="statusText">Conectado</span>
-  </div>
-</div>
+    <!-- Status -->
+    <div class="api-section">
+      <div class="status-row">
+        <span class="status-dot online" id="statusDot"></span>
+        <span class="status-text" id="statusText">Conectado</span>
+      </div>
+    </div>
 
     <!-- Modos -->
     <div class="modes-section">
@@ -39,18 +38,34 @@
       </div>
     </div>
 
+    <!-- Histórico -->
+    <div class="history-section">
+      <p class="section-label">HISTÓRICO</p>
+      <div id="historyList" class="history-list">
+        <p class="history-empty">Nenhuma conversa ainda</p>
+      </div>
+    </div>
+
     <div class="sidebar-footer">
-      <button class="btn-clear" onclick="clearChat()">🗑️ Limpar Chat</button>
+      <button class="btn-clear" onclick="clearChat()">🗑️ Novo Chat</button>
       <a href="/logout" class="btn-logout">Sair ({{ session.email }})</a>
     </div>
   </aside>
 
   <!-- ── CHAT AREA ── -->
   <main class="chat-area">
+
+    <!-- Mobile header -->
+    <div class="mobile-header">
+      <button class="sidebar-toggle" onclick="toggleSidebar()">☰</button>
+      <span class="brand-name">Pip-I.A</span>
+      <button class="theme-toggle" onclick="toggleTheme()" id="themeBtnMobile">🌙</button>
+    </div>
+
     <div class="messages" id="messages">
       <div class="welcome" id="welcome">
-        <div class="welcome-icon">
-          <img src="../static/css/imgs/pip.png" alt="Mascote Pip-I.A" srcset="">
+        <div class="welcome-pip">
+          <img src="../static/css/imgs/pip.png" alt="Pip-I.A" id="welcomePip">
         </div>
         <h2>Pip-I.A está pronto!</h2>
         <p>Como posso ajudar com programação hoje?</p>
@@ -63,8 +78,26 @@
       </div>
     </div>
 
+    <!-- Preview de imagem -->
+    <div class="image-preview-bar" id="imagePreviewBar" style="display:none;">
+      <div class="image-preview-inner">
+        <img id="imagePreviewThumb" src="" alt="Preview"/>
+        <span id="imagePreviewName"></span>
+        <button onclick="removeImage()" class="remove-img-btn" title="Remover imagem">✕</button>
+      </div>
+    </div>
+
     <div class="input-area">
       <div class="input-wrapper">
+        <!-- Botão de imagem -->
+        <label class="img-upload-btn" for="imageInput" title="Enviar imagem">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/>
+            <polyline points="21 15 16 10 5 21"/>
+          </svg>
+          <input type="file" id="imageInput" accept="image/*" style="display:none;" onchange="handleImageSelect(event)"/>
+        </label>
+
         <textarea
           id="userInput"
           placeholder="Digite sua mensagem... (Enter para enviar, Shift+Enter para nova linha)"
@@ -79,11 +112,31 @@
           </svg>
         </button>
       </div>
+      <p class="input-hint">Enter para enviar · Shift+Enter para nova linha · 📎 para imagem</p>
     </div>
   </main>
 </div>
 
+<!-- ── MASCOTE FLUTUANTE ── -->
+<div class="pip-mascot" id="pipMascot" onclick="toggleMascotMenu()">
+  <img src="../static/css/imgs/pip_cabeça.png" alt="Pip" id="pipMascotImg"/>
+  <div class="pip-speech" id="pipSpeech"></div>
+  <div class="pip-dot-indicator"></div>
+</div>
+
+<!-- Menu do mascote -->
+<div class="mascot-menu" id="mascotMenu" style="display:none;">
+  <p class="mascot-menu-title">Pip diz:</p>
+  <button onclick="sendChip('Me dê uma dica de programação aleatória'); toggleMascotMenu()">💡 Dica do dia</button>
+  <button onclick="sendChip('Qual é o erro mais comum em programação?'); toggleMascotMenu()">🐛 Erro comum</button>
+  <button onclick="sendChip('Me desafie com um exercício de programação'); toggleMascotMenu()">🏆 Desafio!</button>
+  <button onclick="toggleMascotMenu()">✕ Fechar</button>
+</div>
+
 <div class="toast" id="toast"></div>
+
+<!-- Overlay mobile -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
 {% endblock %}
 
 {% block extra_js %}

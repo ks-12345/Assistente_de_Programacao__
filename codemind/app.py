@@ -32,14 +32,15 @@ def save_users(users):
 # ── ROTAS ──
 
 @app.route('/')
+def index():
+    if 'email' not in session:
+        return redirect(url_for('home'))
+    return render_template('index.html')
+
+@app.route('/home')
 def home():
     return render_template('home.html')
 
-@app.route('/')
-def index():
-    if 'email' not in session:
-        return redirect(url_for('login'))
-    return render_template('index.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

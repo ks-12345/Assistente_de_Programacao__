@@ -1,4 +1,4 @@
-# 🧠 CodeMind
+# 🧠 Pip.IA
 
 > Assistente de programação com IA, construído com Flask + Gemini API.
 
@@ -10,7 +10,7 @@
 
 ## 📋 Sobre o Projeto
 
-O **CodeMind** é uma aplicação web de chat com inteligência artificial focada em programação. O usuário faz login, escolhe um modo de IA (debug, explicar, gerar código, etc.) e conversa com o modelo Gemini 2.5 Flash diretamente pelo navegador.
+O **Pip.IA** é uma aplicação web de chat com inteligência artificial focada em programação. O usuário faz login, escolhe um modo de IA (debug, explicar, gerar código, etc.) e conversa com o modelo Gemini 2.5 Flash diretamente pelo navegador.
 
 A API Key do Gemini fica configurada no servidor via `.env`, sem necessidade de o usuário inserir nenhuma chave.
 
@@ -49,7 +49,7 @@ A API Key do Gemini fica configurada no servidor via `.env`, sem necessidade de 
 ## 📁 Estrutura do Projeto
 
 ```
-codemind/
+Pip.IA/
 ├── app.py                  # Servidor Flask e rotas
 ├── .env                    # Variáveis de ambiente (não versionar)
 ├── .env.example            # Exemplo de configuração
@@ -80,8 +80,8 @@ codemind/
 
 ```bash
 # 1. Clone o repositório
-git clone https://github.com/seu-usuario/codemind.git
-cd codemind
+git clone https://github.com/seu-usuario/Pip.IA.git
+cd Pip.IA
 
 # 2. Crie e ative o ambiente virtual
 python -m venv venv
