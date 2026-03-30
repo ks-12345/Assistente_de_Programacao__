@@ -238,8 +238,25 @@
     .btn-hero-primary:hover {
       background: var(--accent2);
       transform: translateY(-2px);
-      box-shadow: 0 8px 30px rgba(124,106,247,0.45);
     }
+
+    .video-wrapper {
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto 40px;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(0,0,0,0.33);
+    }
+
+    .video-wrapper video {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
     .btn-hero-primary svg { transition: transform 0.2s; }
     .btn-hero-primary:hover svg { transform: translateX(3px); }
 
@@ -691,8 +708,11 @@
       <section class="cta-section reveal">
       <div class="cta-box">
         <div class="cta-glow"></div>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/k9PkWfySrZ4?si=dLjZ0JVvQHKdz-U3" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-        
+        <div class="video-wrapper">
+          <video controls preload="metadata" playsinline>
+            <source src="../static/css/imgs/gravação_teste.mp4" type="video/mp4">
+            Seu navegador não suporta o vídeo.
+          </video>
         </div>
       </div>
     </section>

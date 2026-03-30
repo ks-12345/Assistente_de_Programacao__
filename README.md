@@ -1,127 +1,168 @@
-# 🤖 Pip.IA — Assistente de Programação com IA
+# 🧠 Pip.IA
 
-## 📌 Sobre este projeto
+> Assistente de programação com IA, construído com Flask + Gemini API.
 
-O **Pip.IA** é uma aplicação web construída em **Flask** que oferece um assistente de programação com inteligência artificial usando a API do **Google Gemini 2.5 Flash**.
+![Python](https://img.shields.io/badge/Python-3.10+-blue?logo=python)
+![Flask](https://img.shields.io/badge/Flask-3.x-black?logo=flask)
+![Gemini](https://img.shields.io/badge/Gemini-2.5--Flash-orange?logo=google)
 
-O usuário faz cadastro/login, acessa um chat protegido por sessão e interage com o modelo para:
-- depurar código,
-- gerar trechos de código,
-- explicar algoritmos,
-- revisar código,
-- tirar dúvidas sobre SQL e Git.
+---
 
-## ✨ Funcionalidades principais
+## 📋 Sobre o Projeto
 
-- 🔐 Autenticação com cadastro e login
-- 💬 Chat com IA para programação
-- 🧠 Múltiplos modos de assistência (debug, explicar, gerar, revisar, SQL, Git)
-- 📋 Cópia de texto com um clique
-- 🗑️ Limpeza de chat sem recarregar a página
-- 🔒 Chave de API armazenada no backend via `.env`
+O **Pip.IA** é uma aplicação web de chat com inteligência artificial focada em programação. O usuário faz login, escolhe um modo de IA (debug, explicar, gerar código, etc.) e conversa com o modelo Gemini 2.5 Flash diretamente pelo navegador.
 
-## 🛠️ Tecnologias utilizadas
+A API Key do Gemini fica configurada no servidor via `.env`, sem necessidade de o usuário inserir nenhuma chave.
 
-- Python 3.10+
-- Flask
-- Requests
-- python-dotenv
-- HTML, CSS e JavaScript puro
-- Google Gemini API
+---
 
-## 📁 Estrutura do projeto
+## ✨ Funcionalidades
+
+- 🔐 **Autenticação** — cadastro e login com e-mail e senha
+- 💬 **Chat em tempo real** com histórico de conversa por sessão
+- 🎛️ **7 modos de IA** especializados:
+  - **Geral** — assistente geral de programação
+  - **Debug** — analisa e corrige bugs
+  - **Explicar** — explica código linha a linha
+  - **Gerar** — gera código a partir de descrição
+  - **Revisar** — avalia qualidade e boas práticas
+  - **SQL** — auxilia com bancos de dados relacionais
+  - **Git** — explica comandos e fluxos de versionamento
+- 📋 **Cópia de código** com um clique
+- 🗑️ **Limpar chat** sem recarregar a página
+
+---
+
+## 🛠️ Tecnologias
+
+| Camada | Tecnologia |
+|---|---|
+| Backend | Python 3, Flask |
+| IA | Google Gemini 2.5 Flash |
+| Frontend | HTML, CSS, JavaScript puro |
+| Autenticação | Flask Session |
+| Dados de usuários | JSON local (`users.json`) |
+| Variáveis de ambiente | python-dotenv |
+
+---
+
+## 📁 Estrutura do Projeto
 
 ```
-codemind/
-├── app.py
-├── .env
-├── users.json
-├── requirements.txt
+Pip.IA/
+├── app.py                  # Servidor Flask e rotas
+├── .env                    # Variáveis de ambiente (não versionar)
+├── .env.example            # Exemplo de configuração
+├── users.json              # Banco de dados de usuários (auto-gerado)
+├── requirements.txt        # Dependências Python
 ├── templates/
-│   ├── base.html
-│   ├── cadastro.html
-│   ├── home.html
-│   ├── index.html
-│   └── login.html
+│   ├── base.html           # Layout base
+│   ├── index.html          # Página principal do chat
+│   ├── login.html          # Página de login
+│   └── cadastro.html       # Página de cadastro
 └── static/
     ├── css/
-    │   └── style.css
+    │   └── style.css       # Estilos da aplicação
     └── js/
-        └── script.js
+        └── script.js       # Lógica do frontend
 ```
 
-> Observação: se você estiver editando a partir da raiz do repositório, entre na pasta `codemind/` antes de executar o projeto.
+---
 
-## 🚀 Como executar
+## 🚀 Como Rodar
 
-### 1. Navegue para o diretório do projeto
+### Pré-requisitos
+
+- Python 3.10 ou superior
+- Uma chave de API do Google Gemini ([obter gratuitamente](https://aistudio.google.com/app/apikey))
+
+### Instalação
 
 ```bash
-cd codemind
-```
+# 1. Clone o repositório
+git clone https://github.com/seu-usuario/Pip.IA.git
+cd Pip.IA
 
-### 2. Crie e ative um ambiente virtual
-
-```bash
+# 2. Crie e ative o ambiente virtual
 python -m venv venv
-venv\Scripts\activate
-```
+source venv/bin/activate      # Linux/macOS
+venv\Scripts\activate         # Windows
 
-### 3. Instale as dependências
-
-```bash
+# 3. Instale as dependências
 pip install -r requirements.txt
+
+# 4. Configure as variáveis de ambiente
+cp .env.example .env
+# Edite o .env e insira sua API Key
 ```
 
-### 4. Crie o arquivo `.env`
-
-No diretório `codemind/`, crie um arquivo `.env` com o conteúdo:
+### Configuração do `.env`
 
 ```env
 API_KEY=sua_chave_gemini_aqui
-SECRET_KEY=uma_string_secreta
+SECRET_KEY=uma_string_secreta_aleatoria
 ```
 
-### 5. Execute o projeto
+### Executar
 
 ```bash
 python app.py
 ```
 
-A aplicação estará disponível em:
-
-```
-http://localhost:5000
-```
-
-## ✅ Dependências
-
-```txt
-flask>=3.0.0
-requests>=2.31.0
-python-dotenv>=1.0.0
-```
-
-## 🔒 Segurança
-
-- A chave do Gemini deve ser mantida no arquivo `.env` do backend.
-- Nunca exponha o `.env` no repositório.
-- As senhas são armazenadas em texto simples no `users.json`; para produção, use hashing seguro (como `bcrypt`) e um banco de dados real.
-
-## 🗒️ Observações
-
-- O arquivo `users.json` é usado como armazenamento local de usuários.
-- O app exige que `API_KEY` esteja presente no `.env` ou não iniciará.
-
-## 📌 Sugestões de melhoria
-
-- Hash de senha com `bcrypt`
-- Persistência de histórico de conversas por usuário
-- Banco de dados SQLite ou PostgreSQL
-- Deploy em um serviço de nuvem
+Acesse em: **http://localhost:5000**
 
 ---
 
-## 👨‍💻 Autor
+## 📦 Dependências
 
-Projeto desenvolvido como assistente de programação com IA.
+```txt
+flask
+requests
+python-dotenv
+```
+
+Instale com:
+
+```bash
+pip install flask requests python-dotenv
+```
+
+Ou gere o `requirements.txt`:
+
+```bash
+pip freeze > requirements.txt
+```
+
+---
+
+## 🔒 Segurança
+
+- A API Key **nunca é exposta ao frontend** — toda comunicação com o Gemini passa pelo backend
+- As senhas são armazenadas em texto plano no `users.json` — para produção, recomenda-se usar hash (ex: `bcrypt`) e um banco de dados real
+- O `users.json` e o `.env` **não devem ser versionados** — adicione ao `.gitignore`
+
+### `.gitignore` recomendado
+
+```
+.env
+users.json
+venv/
+__pycache__/
+*.pyc 
+```
+
+---
+
+## 🗺️ Próximos Passos (ideias)
+
+- [ ] Hash de senhas com `bcrypt`
+- [ ] Banco de dados (SQLite ou PostgreSQL) no lugar do `users.json`
+- [ ] Histórico de conversas persistente por usuário
+- [ ] Suporte a upload de arquivos de código
+- [ ] Deploy no Railway, Render ou Fly.io
+
+---
+
+## 📄 Licença
+
+Este projeto está sob a licença MIT. Sinta-se livre para usar, modificar e distribuir.

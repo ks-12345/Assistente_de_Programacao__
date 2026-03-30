@@ -2,13 +2,13 @@
 // script.js — Pip-I.A v2
 // ══════════════════════════════════════════════
 
-let currentMode   = 'geral';
-let history       = [];
-let selectedImage = null; // { base64, mimeType, name }
-let chatSessions  = [];   // [{id, title, history}]
-let currentSession = null;
-let mascotMenuOpen = false;
-let speechTimeout = null;
+let currentMode      = 'geral';
+let history          = [];
+let selectedImage    = null; // { base64, mimeType, name }
+let chatSessions     = [];   // [{id, title, history}]
+let currentSessionId = null;
+let mascotMenuOpen   = false;
+let speechTimeout    = null;
 
 // ── FRASES DO MASCOTE ──
 const PIP_PHRASES = [
@@ -157,6 +157,7 @@ function removeImage() {
 function clearChat() {
   if (history.length > 0) saveToHistory();
   history = [];
+  currentSessionId = null;
   selectedImage = null;
   document.getElementById('imagePreviewBar').style.display = 'none';
   const msgs = document.getElementById('messages');
@@ -259,7 +260,19 @@ function saveToHistory() {
   if (history.length === 0) return;
   const firstMsg = history[0]?.parts?.[0]?.text || 'Conversa';
   const title    = firstMsg.substring(0, 35) + (firstMsg.length > 35 ? '…' : '');
-  const session  = { id: Date.now(), title, history: [...history] };
+
+  if (currentSessionId) {
+    const existingIndex = chatSessions.findIndex(s => s.id === currentSessionId);
+    if (existingIndex !== -1) {
+      chatSessions[existingIndex].history = [...history];
+      chatSessions[existingIndex].title   = title;
+      renderHistory();
+      return;
+    }
+  }
+
+  const session = { id: Date.now(), title, history: [...history] };
+  currentSessionId = session.id;
   chatSessions.unshift(session);
   if (chatSessions.length > 10) chatSessions.pop();
   renderHistory();
@@ -280,7 +293,12 @@ function renderHistory() {
 function loadSession(id) {
   const session = chatSessions.find(s => s.id === id);
   if (!session) return;
-  if (history.length > 0) saveToHistory();
+
+  if (currentSessionId !== session.id && history.length > 0) {
+    saveToHistory();
+  }
+
+  currentSessionId = session.id;
   history = [...session.history];
   const msgs = document.getElementById('messages');
   msgs.innerHTML = '';
