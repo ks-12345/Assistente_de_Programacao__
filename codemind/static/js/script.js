@@ -406,4 +406,69 @@ document.addEventListener('click', e => {
     mascotMenuOpen = false;
     menu.style.display = 'none';
   }
+
+
 });
+
+// ══ RECONHECIMENTO DE VOZ ══
+let recognition = null;
+let isListening = false;
+
+window.toggleVoice = function() {
+  if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+    showToast('Seu navegador não suporta reconhecimento de voz', 'error');
+    pipSay('Navegador sem suporte a voz 😕');
+    return;
+  }
+
+  if (isListening) {
+    recognition.stop();
+    return;
+  }
+
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  recognition = new SpeechRecognition();
+  recognition.lang = 'pt-BR';
+  recognition.interimResults = false;
+  // false → onresult só dispara quando você PARA de falar
+  recognition.maxAlternatives = 1;
+  // maxAlternatives = número máximo de resultados possíveis que o sistema pode retornar - 1 = você quer apenas a melhor opção 
+
+  const voiceBtn = document.getElementById('voiceBtn');
+
+  recognition.onstart = () => {
+    isListening = true;
+    voiceBtn.classList.add('listening');
+    pipSay('Ouvindo... 🎙️', 10000);
+    showToast('Fale agora!', 'success');
+  };
+
+  recognition.onresult = (event) => {
+    const transcript = event.results[0][0].transcript;
+    document.getElementById('userInput').value = transcript;
+    sendMessage();
+  };
+
+recognition.onerror = (event) => {
+  switch (event.error) {
+    case 'no-speech':
+      pipSay('Não ouvi nada 😶');
+      break;
+
+    case 'not-allowed':
+      pipSay('Permissão do microfone negada 🚫');
+      break;
+
+    default:
+      showToast('Erro no microfone: ' + event.error, 'error');
+      pipSay('Erro ao ouvir 😅');
+  }
+};
+
+  recognition.onend = () => {
+    isListening = false;
+    voiceBtn.classList.remove('listening');
+  };
+
+  recognition.start();
+}
